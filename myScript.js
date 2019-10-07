@@ -1,3 +1,10 @@
+//it'll run, but every once in a while it shits. Which is okay, they're four-year olds! What can they do. 
+
+
+
+
+
+
 //function to split up by n words
 function nGramsWords(sentence, n) {
   var words = sentence.split(/\W+/);
@@ -111,8 +118,6 @@ function arrayContains(needle, arrhaystack)
 
 function run(inputSplit) {
 
-  console.log(output);
-  console.log(inputSplit);
 
 
   // Predict and replace next word in the sentence.
@@ -188,7 +193,7 @@ inputField.addEventListener("keyup", function(event) {
 
     output = [];
     input = [];
-    
+
 
 
     // Cancel the default action, if needed
