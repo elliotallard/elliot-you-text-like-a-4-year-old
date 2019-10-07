@@ -72,7 +72,7 @@ function ngrammerize(textSplit, n) {
 
 // // Start with an arbitrary ngram
 // console.log(ngrams[i])
-var input = "Hey, you got nice? I didn't";
+var input = "Where did you get those oranges? I loved them!";
 
 let output = [];
 
@@ -83,9 +83,19 @@ let inputSplit = input.split(" ");
 const punctuation = ['.', ',', '!', '?'];
 
 
+
+
 function getEnding(str) {
   return str[str.length - 1];
 };
+
+
+// adapted from James on Stack Overflow
+// https://stackoverflow.com/questions/6116474/how-to-find-if-an-array-contains-a-specific-string-in-javascript-jquery
+function arrayContains(needle, arrhaystack)
+{
+    return (arrhaystack.indexOf(needle) > -1);
+}
 
 
 // Predict and replace next word in the sentence.
@@ -95,7 +105,7 @@ for (var i = 0; i < inputSplit.length; i++) {
 
 
 
-  if (output.length == [] || getEnding(output[i - 1]) in punctuation || getEnding(inputSplit[i]) in punctuation) {
+  if (output.length == [] || arrayContains(getEnding(output[i - 1]), punctuation) || arrayContains(getEnding(inputSplit[i]), punctuation)) {
 
         // push onto output the current index in the input string.
         console.log(inputSplit[i]);
@@ -132,7 +142,7 @@ for (var i = 0; i < inputSplit.length; i++) {
     } else {
 
       // input this message for any dummies trying to use a too big worddd. 
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.1) {
           continue;
 
           // output.push("\n\n *** pick a different word ! this is too grownup = " + current + " ***\n\n");
