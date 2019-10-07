@@ -47,9 +47,6 @@ for (var i = 0; i < myTexts.length; i++) {
   ngrammerize(textSplit, 1);
 }
 
-    // var text = 'A small difference from the concordance you might notice above is the use of hasOwnProperty() which is a universal object method in JavaScript that allows you to test if a variable is a property of the object or not. Last week, we said if (ngrams[gram] === undefined). Both are valid strategies.';
-
-    // var textSplit = text.split(" "); 
 
 
 function ngrammerize(textSplit, n) {
@@ -70,24 +67,37 @@ function ngrammerize(textSplit, n) {
 
 
 
+
+// -------------------------------- SPLIT BETWEEN SET-UP AND TAKING INPUT -------------------------------
+
+
+
+
+
+
 // // Start with an arbitrary ngram
 // console.log(ngrams[i])
-var input = "Where did you get those oranges? I loved them!";
+
+
+
+
+
+
+
+
 
 let output = [];
-
-let inputSplit = input.split(" ");
-
 
 
 const punctuation = ['.', ',', '!', '?'];
 
 
-
-
 function getEnding(str) {
   return str[str.length - 1];
 };
+
+
+
 
 
 // adapted from James on Stack Overflow
@@ -98,65 +108,99 @@ function arrayContains(needle, arrhaystack)
 }
 
 
-// Predict and replace next word in the sentence.
-for (var i = 0; i < inputSplit.length; i++) {
-  //i - 1 will retrieve the last thing pushed to output
+
+function run(inputSplit) {
+
+  console.log(output);
+  console.log(inputSplit);
+
+
+  // Predict and replace next word in the sentence.
+  for (var i = 0; i < inputSplit.length; i++) {
+    //i - 1 will retrieve the last thing pushed to output
 
 
 
 
-  if (output.length == [] || arrayContains(getEnding(output[i - 1]), punctuation) || arrayContains(getEnding(inputSplit[i]), punctuation)) {
+    if (output.length == [] || arrayContains(getEnding(output[i - 1]), punctuation) || arrayContains(getEnding(inputSplit[i]), punctuation)) {
 
-        // push onto output the current index in the input string.
-        console.log(inputSplit[i]);
-        let current = inputSplit[i];
-        output.push(current);
-        continue;
-
-
-  } else {
-
-    console.log(output.length == [], getEnding(output[i - 1]) in punctuation, getEnding(inputSplit[i]) in punctuation)
-
-    // push onto output a regram from the previous word in output.
-
-    let current = output[i-1];
-    
-    if (ngrams.hasOwnProperty(current)) {
-      
-      // What are all the possible next tokens
-      var possible = ngrams[current];
-      // Pick one randomly
-      var next = choice(possible);
-      // Add to the output
-      if (Math.random() < 0.2) {
-        output.push(" " + next.toUpperCase());
-      } else {
-        output.push(" " + next);
-      }
-        
-      // Get next - if it has a 
-      // an ngram in the next iteration of the loop
+          // push onto output the current index in the input string.
+          console.log(inputSplit[i]);
+          let current = inputSplit[i];
+          output.push(current);
+          continue;
 
 
     } else {
 
-      // input this message for any dummies trying to use a too big worddd. 
-        if (Math.random() < 0.1) {
-          continue;
+      //console.log(output.length == [], getEnding(output[i - 1]) in punctuation, getEnding(inputSplit[i]) in punctuation)
 
-          // output.push("\n\n *** pick a different word ! this is too grownup = " + current + " ***\n\n");
+      // push onto output a regram from the previous word in output.
+
+      let current = output[i-1];
+      
+      if (ngrams.hasOwnProperty(current)) {
+        
+        // What are all the possible next tokens
+        var possible = ngrams[current];
+        // Pick one randomly
+        var next = choice(possible);
+        // Add to the output
+        if (Math.random() < 0.2) {
+          output.push(" " + next.toUpperCase());
         } else {
-          output.push(randomProperty(ngrams))
+          output.push(" " + next);
         }
-      }
-  }
+          
+        // Get next - if it has a 
+        // an ngram in the next iteration of the loop
 
+
+      } else {
+
+        // input this message for any dummies trying to use a too big worddd. 
+          if (Math.random() < 0.1) {
+            continue;
+
+            // output.push("\n\n *** pick a different word ! this is too grownup = " + current + " ***\n\n");
+          } else {
+            output.push(randomProperty(ngrams))
+          }
+        }
+    }
+
+  }
 };
 
 
 
-document.getElementById('text').innerHTML = output.join(" ");
+// adapted from W3Schools.
+// https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+
+var inputField = document.getElementById("myInput");
+var input = document.getElementById("myInput").value;
+
+// Execute a function when the user releases a key on the keyboard
+inputField.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    
+
+    output = [];
+    input = [];
+    
+
+
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    window.input = document.getElementById("myInput").value;
+    run(input.split(" "));
+    document.getElementById('text').innerHTML = output.join(" ");
+    
+
+  }
+});
 
 
 
@@ -166,4 +210,6 @@ document.getElementById('text').innerHTML = output.join(" ");
 
 
 
-//adapted from dan shiffman & everest pipkin :) 
+
+
+//adapted from dan shiffman & everest pipkin & various stack-overflowers :) URLs included for StackOverflow.
