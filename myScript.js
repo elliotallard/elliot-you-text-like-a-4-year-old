@@ -45,7 +45,6 @@ for (var i = 0; i < myTexts.length; i++) {
 
   let textSplit = myTexts[i];
   ngrammerize(textSplit, 1);
-  console.log(textSplit);
 }
 
     // var text = 'A small difference from the concordance you might notice above is the use of hasOwnProperty() which is a universal object method in JavaScript that allows you to test if a variable is a property of the object or not. Last week, we said if (ngrams[gram] === undefined). Both are valid strategies.';
@@ -73,55 +72,79 @@ function ngrammerize(textSplit, n) {
 
 // // Start with an arbitrary ngram
 // console.log(ngrams[i])
-var input = "There are certain ways to write a love song. Always, you can do this. Where do you want to go to eat?";
+var input = "Hey, you got nice? I didn't";
 
 let output = [];
 
 let inputSplit = input.split(" ");
 
-console.log(inputSplit);
 
 
-// // The final text
-// var output = current;
+const punctuation = ['.', ',', '!', '?'];
 
 
-const punctuation = ['.', ',', '!', '?']
+function getEnding(str) {
+  return str[str.length - 1];
+};
 
 
 // Predict and replace next word in the sentence.
 for (var i = 0; i < inputSplit.length; i++) {
-  
-  let current = inputSplit[i];
-  // set current to last entry if it inputSplit doesn't have punctuation in the last string.
-  if (current.substring(current.length - 1) in punctuation === false) {
-      current = output[inputSplit.length - 1];
-    }
+  //i - 1 will retrieve the last thing pushed to output
 
 
 
 
-    
-  if (ngrams.hasOwnProperty(current)) {
-    // What are all the possible next tokens
-    var possible = ngrams[current];
-    // Pick one randomly
-    var next = choice(possible);
-    // Add to the output
-    output.push(" " + next);
-    // Get next - if it has a 
-    // an ngram in the next iteration of the loop
+  if (output.length == [] || getEnding(output[i - 1]) in punctuation || getEnding(inputSplit[i]) in punctuation) {
+
+        // push onto output the current index in the input string.
+        console.log(inputSplit[i]);
+        let current = inputSplit[i];
+        output.push(current);
+        continue;
 
 
   } else {
-    // input this message for any dummies trying to use a too big worddd. 
-      if (Math.random() < 0.05) {
-        output.push("\n\n *** pick a different word ! this is too grownup = " + current + " ***\n\n");
+
+    console.log(output.length == [], getEnding(output[i - 1]) in punctuation, getEnding(inputSplit[i]) in punctuation)
+
+    // push onto output a regram from the previous word in output.
+
+    let current = output[i-1];
+    
+    if (ngrams.hasOwnProperty(current)) {
+      
+      // What are all the possible next tokens
+      var possible = ngrams[current];
+      // Pick one randomly
+      var next = choice(possible);
+      // Add to the output
+      if (Math.random() < 0.2) {
+        output.push(" " + next.toUpperCase());
       } else {
-        output.push(randomProperty(ngrams))
+        output.push(" " + next);
+      }
+        
+      // Get next - if it has a 
+      // an ngram in the next iteration of the loop
+
+
+    } else {
+
+      // input this message for any dummies trying to use a too big worddd. 
+        if (Math.random() < 0.01) {
+          continue;
+
+          // output.push("\n\n *** pick a different word ! this is too grownup = " + current + " ***\n\n");
+        } else {
+          output.push(randomProperty(ngrams))
+        }
       }
   }
-}
+
+};
+
+
 
 document.getElementById('text').innerHTML = output.join(" ");
 
